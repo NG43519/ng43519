@@ -27,6 +27,22 @@
     
     <button class="bg-blue-300 p-4">count</button>
 
+    <h1>Artykuły</h1>
+    
+    <div id="articles"></div>
+
+    <h2>Dodaj nowy artykuł</h2>
+    
+    <form id="article-form">
+        
+      <input type="text" id="title" placeholder="Tytuł" required />
+      <input type="text" id="subtitle" placeholder="Podtytuł" required />
+      <input type="text" id="author" placeholder="Autor" required />
+      <textarea id="content" placeholder="Treść" required></textarea>
+      <button type="submit">Dodaj</button>
+        
+    </form>
+
    <script>
      
      const response = fetch('https://xmmdqmscqcqpvvbbrbxz.supabase.co', {
