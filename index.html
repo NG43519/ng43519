@@ -10,17 +10,13 @@
     <title>Vite App</title>
     <link href="style.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    
     <style type="text/tailwindcss">
-      
       @theme {
         --color-primary: #fcba03;
       }
-      
     </style>
-
     <script src="https://cdn.jsdelivr.net/npm/date-fns@2.30.0/dist/date-fns.min.js"></script>
-    
+
   </head>
   
   <body>
@@ -29,9 +25,7 @@
     
     <button class="bg-blue-300 p-4">count</button>
 
-    <h1>Artykuły</h1>
-
-    <label for="sort">Sortuj według:</label>
+    <label for="sort">Sortowanie:</label>
     
       <select id="sort">
         
@@ -43,20 +37,20 @@
     
     <div id="article"></div>
 
-    <h2>Dodaj nowy artykuł</h2>
+    <h2>Dodaj nowy artykuł:</h2>
     
     <form id="article-form">
         
-      <input type="text" id="title" placeholder="Tytuł" required />
-      <input type="text" id="subtitle" placeholder="Podtytuł" required />
-      <input type="text" id="author" placeholder="Autor" required />
+      <input type="text" id="title" placeholder="Tytuł" required/>
+      <input type="text" id="subtitle" placeholder="Podtytuł" required/>
+      <input type="text" id="author" placeholder="Autor" required/>
       <textarea id="content" placeholder="Treść" required></textarea>
-      <input type="datetime-local" id="created_at" required />
+      <input type="datetime-local" id="created_at" required/>
       <button type="submit">Dodaj</button>
         
     </form>
 
-  <script type="module">
+  <script>
 
     import { format } from 'https://cdn.skypack.dev/date-fns@2.30.0';
 
