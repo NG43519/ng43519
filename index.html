@@ -10,13 +10,17 @@
     <title>Vite App</title>
     <link href="style.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    
     <style type="text/tailwindcss">
+      
       @theme {
         --color-primary: #fcba03;
       }
+      
     </style>
-    <script src="https://cdn.jsdelivr.net/npm/date-fns@2.30.0/dist/date-fns.min.js"></script>
 
+    <script src="https://cdn.jsdelivr.net/npm/date-fns@2.30.0/dist/date-fns.min.js"></script>
+    
   </head>
   
   <body>
@@ -25,7 +29,9 @@
     
     <button class="bg-blue-300 p-4">count</button>
 
-    <label for="sort">Sortowanie:</label>
+    <h1>Artykuły</h1>
+
+    <label for="sort">Sortuj według:</label>
     
       <select id="sort">
         
@@ -37,47 +43,52 @@
     
     <div id="article"></div>
 
-    <h2>Dodaj nowy artykuł:</h2>
+    <h2>Dodaj nowy artykuł</h2>
     
     <form id="article-form">
         
-      <input type="text" id="title" placeholder="Tytuł" required/>
-      <input type="text" id="subtitle" placeholder="Podtytuł" required/>
-      <input type="text" id="author" placeholder="Autor" required/>
+      <input type="text" id="title" placeholder="Tytuł" required />
+      <input type="text" id="subtitle" placeholder="Podtytuł" required />
+      <input type="text" id="author" placeholder="Autor" required />
       <textarea id="content" placeholder="Treść" required></textarea>
-      <input type="datetime-local" id="created_at" required/>
+      <input type="datetime-local" id="created_at" required />
       <button type="submit">Dodaj</button>
         
     </form>
 
-  <script>
-    
+  <script type="module">
+
     import { format } from 'https://cdn.skypack.dev/date-fns@2.30.0';
+
     const SUPABASE_URL = 'https://xmmdqmscqcqpvvbbrbxz.supabase.co';
     const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhtbWRxbXNjcWNxcHZ2YmJyYnh6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDgzNDcyMDYsImV4cCI6MjA2MzkyMzIwNn0.ev8jgE0IkOiH73Gx4jGjqdKAcZCywe6Q3mIhbvzzi9w';
     const TABLE_NAME = 'article';
-    const fetchArticles = async (order = 'created_at.desc') => {
-      const res = await fetch(`${SUPABASE_URL}/rest/v1/${TABLE_NAME}?select=*&order=${order}`, {
-        headers: {
-          apikey: SUPABASE_KEY,
-          Authorization: `Bearer ${SUPABASE_KEY}`
-        }
-      });
-      const article = await res.json();
-      const container = document.getElementById('article');
-      container.innerHTML = '';
-      article.reverse().forEach(({ title, subtitle, author, content, created_at }) => {
-        const formattedDate = format(new Date(created_at), 'dd-MM-yyyy');
-        const articleEl = document.createElement('article');
-        articleEl.innerHTML = `
-          <h2>${title}</h2>
-          <h4>${subtitle}</h4>
-          <p><strong>Autor:</strong> ${author} | <em>${formattedDate}</em></p>
-          <p>${content}</p>
-        `;
-        container.appendChild(articleEl);
-      });
-    };
+
+const fetchArticles = async (order = 'created_at.desc') => {
+  const res = await fetch(`${SUPABASE_URL}/rest/v1/${TABLE_NAME}?select=*&order=${order}`, {
+    headers: {
+      apikey: SUPABASE_KEY,
+      Authorization: `Bearer ${SUPABASE_KEY}`
+    }
+  });
+
+  const article = await res.json();
+  const container = document.getElementById('article');
+  container.innerHTML = '';
+
+  article.reverse().forEach(({ title, subtitle, author, content, created_at }) => {
+    const formattedDate = format(new Date(created_at), 'dd-MM-yyyy');
+    const articleEl = document.createElement('article');
+    articleEl.innerHTML = `
+      <h2>${title}</h2>
+      <h4>${subtitle}</h4>
+      <p><strong>Autor:</strong> ${author} | <em>${formattedDate}</em></p>
+      <p>${content}</p>
+    `;
+    container.appendChild(articleEl);
+  });
+};
+
     document.getElementById('article-form').addEventListener('submit', async (e) => {
       e.preventDefault();
       const title = document.getElementById('title').value;
@@ -85,6 +96,7 @@
       const author = document.getElementById('author').value;
       const content = document.getElementById('content').value;
       const created_at = new Date(document.getElementById('created_at').value).toISOString();
+
       const res = await fetch(`${SUPABASE_URL}/rest/v1/${TABLE_NAME}`, {
         method: 'POST',
         headers: {
@@ -95,6 +107,7 @@
         },
         body: JSON.stringify({ title, subtitle, author, content, created_at })
       });
+
       if (res.ok) {
         document.getElementById('article-form').reset();
         fetchArticles(document.getElementById('sort').value);
@@ -103,9 +116,11 @@
         alert('Błąd przy dodawaniu artykułu: ' + error);
       }
     });
+
     document.getElementById('sort').addEventListener('change', (e) => {
       fetchArticles(e.target.value);
     });
+
     fetchArticles();
      
   </script>
