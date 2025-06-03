@@ -29,7 +29,7 @@
 
     <h1>Artykuły</h1>
     
-    <div id="articles"></div>
+    <div id="article"></div>
 
     <h2>Dodaj nowy artykuł</h2>
     
@@ -47,7 +47,7 @@
      
     const SUPABASE_URL = 'https://xmmdqmscqcqpvvbbrbxz.supabase.co';
     const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhtbWRxbXNjcWNxcHZ2YmJyYnh6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDgzNDcyMDYsImV4cCI6MjA2MzkyMzIwNn0.ev8jgE0IkOiH73Gx4jGjqdKAcZCywe6Q3mIhbvzzi9w';
-    const TABLE_NAME = 'articles';
+    const TABLE_NAME = 'article';
 
     const fetchArticles = async () => {
       const res = await fetch(`${SUPABASE_URL}/rest/v1/${TABLE_NAME}?select=*`, {
@@ -56,10 +56,10 @@
           Authorization: `Bearer ${SUPABASE_KEY}`
         }
       });
-      const articles = await res.json();
-      const container = document.getElementById('articles');
+      const article = await res.json();
+      const container = document.getElementById('article');
       container.innerHTML = '';
-      articles.reverse().forEach(({ title, subtitle, author, content, created_at }) => {
+      article.reverse().forEach(({ title, subtitle, author, content, created_at }) => {
         const article = document.createElement('article');
         article.innerHTML = `
           <h2>${title}</h2>
