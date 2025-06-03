@@ -95,13 +95,10 @@
         },
         body: JSON.stringify({ title, subtitle, author, content, created_at })
       });
-      if (res.ok)
-      {
+      if (res.ok) {
         document.getElementById('article-form').reset();
         fetchArticles(document.getElementById('sort').value);
-      }
-      else
-      {
+      } else {
         const error = await res.text();
         alert('Błąd przy dodawaniu artykułu: ' + error);
       }
