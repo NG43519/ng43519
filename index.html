@@ -9,24 +9,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Vite App</title>
     <link href="style.css" rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            colors: {
-              primary: '#fcba03',
-            }
-          }
-        }
-      }
-    </script>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     
+    <style type="text/tailwindcss">
+      
+      @theme {
+        --color-primary: #fcba03;
+      }
+      
+    </style>
 
     <script src="https://cdn.jsdelivr.net/npm/date-fns@2.30.0/dist/date-fns.min.js"></script>
-
-    <script type="module" src="main.js"></script>
-
     
   </head>
   
@@ -72,10 +65,10 @@
     const TABLE_NAME = 'article';
 
 const fetchArticles = async (order = 'created_at.desc') => {
-  const res = await fetch(${SUPABASE_URL}/rest/v1/${TABLE_NAME}?select=*&order=${order}, {
+  const res = await fetch(`${SUPABASE_URL}/rest/v1/${TABLE_NAME}?select=*&order=${order}`, {
     headers: {
       apikey: SUPABASE_KEY,
-      Authorization: Bearer ${SUPABASE_KEY}
+      Authorization: `Bearer ${SUPABASE_KEY}`
     }
   });
 
@@ -86,12 +79,12 @@ const fetchArticles = async (order = 'created_at.desc') => {
   article.reverse().forEach(({ title, subtitle, author, content, created_at }) => {
     const formattedDate = format(new Date(created_at), 'dd-MM-yyyy');
     const articleEl = document.createElement('article');
-    articleEl.innerHTML = 
+    articleEl.innerHTML = `
       <h2>${title}</h2>
       <h4>${subtitle}</h4>
       <p><strong>Autor:</strong> ${author} | <em>${formattedDate}</em></p>
       <p>${content}</p>
-    ;
+    `;
     container.appendChild(articleEl);
   });
 };
@@ -104,11 +97,11 @@ const fetchArticles = async (order = 'created_at.desc') => {
       const content = document.getElementById('content').value;
       const created_at = new Date(document.getElementById('created_at').value).toISOString();
 
-      const res = await fetch(${SUPABASE_URL}/rest/v1/${TABLE_NAME}, {
+      const res = await fetch(`${SUPABASE_URL}/rest/v1/${TABLE_NAME}`, {
         method: 'POST',
         headers: {
           apikey: SUPABASE_KEY,
-          Authorization: Bearer ${SUPABASE_KEY},
+          Authorization: `Bearer ${SUPABASE_KEY}`,
           'Content-Type': 'application/json',
           Prefer: 'return=representation'
         },
@@ -131,8 +124,6 @@ const fetchArticles = async (order = 'created_at.desc') => {
     fetchArticles();
      
   </script>
-
-
     
   </body>
   
